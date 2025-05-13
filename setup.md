@@ -53,3 +53,15 @@ php index.php
 
 OpenSwoole http server is started at http://127.0.0.1:9501
 ```
+
+
+### Add dev server
+Install fswatch
+```bash
+brew install fswatch
+```
+then
+```bash
+chmod +x dev.sh
+./dev.sh
+```

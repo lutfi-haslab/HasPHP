@@ -11,7 +11,7 @@ class HomeController
 {
     public function index(Request $req, Response $res)
     {
-        $html = View::render('home.twig', ['title' => 'Hello']);
+        $html = View::render('home.twig', ['title' => 'Hello hola cool right']);
         $res->html($html);
     }
 
