@@ -1,0 +1,21 @@
+{
+    "name": "haslab/hasphp",
+    "description": "PHP Framework build with OpenSwoole",
+    "autoload": {
+        "psr-4": {
+           "Hasphp\\App\\": "app/",
+           "Hasphp\\Cli\\": "cli/"
+        }
+    },
+    "authors": [
+        {
+            "name": "lutfi-haslab",
+            "email": "work.lutfiikbalmajid@gmail.com"
+        }
+    ],
+    "require": {
+        "openswoole/core": "^22.2",
+        "twig/twig": "^3.21",
+        "firebase/php-jwt": "^6.11"
+    }
+}
