@@ -1,0 +1,59 @@
+<?php
+
+namespace {{namespace}};
+
+use Hasphp\App\Models\Model;
+
+/**
+ * {{ModelName}} Model
+ */
+class {{ModelName}} extends Model
+{
+    /**
+     * The table associated with the model.
+     */
+    protected string $table = '{{tableName}}';
+
+    /**
+     * The attributes that are mass assignable.
+     */
+    protected array $fillable = [
+        // TODO: Add fillable attributes
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     */
+    protected array $hidden = [
+        // TODO: Add hidden attributes (e.g., passwords, tokens)
+    ];
+
+    /**
+     * The attributes that should be cast.
+     */
+    protected array $casts = [
+        // TODO: Add attribute casts (e.g., 'created_at' => 'datetime')
+    ];
+
+    /**
+     * Define relationships here
+     */
+    
+    // Example: One-to-many relationship
+    // public function posts()
+    // {
+    //     return $this->hasMany(Post::class);
+    // }
+    
+    // Example: Many-to-one relationship
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
+    
+    // Example: Many-to-many relationship
+    // public function roles()
+    // {
+    //     return $this->belongsToMany(Role::class, 'user_roles');
+    // }
+}

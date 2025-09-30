@@ -1,11 +1,15 @@
 {
     "name": "haslab/hasphp",
     "description": "PHP Framework build with OpenSwoole",
+    "version": "2.0.0",
     "autoload": {
         "psr-4": {
            "Hasphp\\App\\": "app/",
            "Hasphp\\Cli\\": "cli/"
-        }
+        },
+        "files": [
+            "app/Core/Helpers.php"
+        ]
     },
     "authors": [
         {
@@ -14,8 +18,23 @@
         }
     ],
     "require": {
+        "php": "^8.0",
         "openswoole/core": "^22.2",
         "twig/twig": "^3.21",
-        "firebase/php-jwt": "^6.11"
+        "firebase/php-jwt": "^6.11",
+        "symfony/console": "^6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "scripts": {
+        "serve": "php artisan serve",
+        "serve:swoole": "php artisan serve --mode=swoole",
+        "test": "phpunit"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
     }
 }

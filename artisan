@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * HasPHP Framework - Artisan CLI Tool
+ * 
+ * A powerful command-line interface for HasPHP framework
+ * with generators, migrations, and server management.
+ */
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Hasphp\App\Core\CLI\CLI;
+
+// Initialize CLI with command line arguments
+CLI::init($argv);
+
+// Run the CLI application and get exit code
+$exitCode = CLI::run();
+
+// Exit with the appropriate code
+exit($exitCode);

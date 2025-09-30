@@ -11,7 +11,7 @@ class Request {
     public array $server;
     public string $rawBody;
 
-    public function __construct(SwooleRequest $req) {
+    public function __construct($req) {
         $this->query = $req->get ?? [];
         $this->post = $req->post ?? [];
         $this->headers = $req->header ?? [];

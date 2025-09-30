@@ -1,0 +1,31 @@
+<?php
+
+use Hasphp\App\Core\DB\DatabaseManager;
+
+/**
+ * {{ClassName}} Migration
+ */
+class {{ClassName}}
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        $app = require __DIR__ . '/../../bootstrap/app.php';
+        $db = $app->resolve('db');
+        
+        // TODO: Add your migration logic here
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        $app = require __DIR__ . '/../../bootstrap/app.php';
+        $db = $app->resolve('db');
+        
+        // TODO: Add rollback logic here
+    }
+}

@@ -4,11 +4,11 @@ namespace Hasphp\App\Core;
 class Router {
     private static array $routes = [];
 
-    public static function get(string $path, string $handler, array $middleware = [], array $meta = []) {
+    public static function get(string $path, string|\Closure $handler, array $middleware = [], array $meta = []) {
         self::$routes['GET'][$path] = compact('handler', 'middleware', 'meta');
     }
 
-    public static function post(string $path, string $handler, array $middleware = [], array $meta = []) {
+    public static function post(string $path, string|\Closure $handler, array $middleware = [], array $meta = []) {
         self::$routes['POST'][$path] = compact('handler', 'middleware', 'meta');
     }
 

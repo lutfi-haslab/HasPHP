@@ -1,0 +1,37 @@
+<?php
+
+use Hasphp\App\Core\DB\DatabaseManager;
+
+/**
+ * {{ClassName}} Migration
+ */
+class {{ClassName}}
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        $app = require __DIR__ . '/../../bootstrap/app.php';
+        $db = $app->resolve('db');
+        
+        $sql = "CREATE TABLE {{tableName}} (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )";
+        
+        $db->query($sql);
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        $app = require __DIR__ . '/../../bootstrap/app.php';
+        $db = $app->resolve('db');
+        
+        $db->query("DROP TABLE IF EXISTS {{tableName}}");
+    }
+}

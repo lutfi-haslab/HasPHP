@@ -1,0 +1,40 @@
+<div x-show="currentRoute === 'home' && !loading" x-cloak>
+    <div class="space-y-6">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Welcome to Alpine.js + HasJS 🚀</h2>
+            <p class="text-gray-600 text-lg mb-6">
+                This SPA combines <strong>Alpine.js</strong> for reactive UI with <strong>HasJS</strong> 
+                for advanced state management and routing. Best of both worlds!
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-blue-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold text-blue-800 mb-2">🎯 Alpine.js Features</h3>
+                    <ul class="text-blue-700 space-y-2">
+                        <li>• Declarative reactive templates</li>
+                        <li>• Simple x-data, x-show, x-if directives</li>
+                        <li>• Event handling with @click</li>
+                        <li>• Easy to learn and use</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-green-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-800 mb-2">⚡ HasJS Features</h3>
+                    <ul class="text-green-700 space-y-2">
+                        <li>• Global state management</li>
+                        <li>• Browser routing with clean URLs</li>
+                        <li>• API client with caching</li>
+                        <li>• Component lifecycle hooks</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                <p class="text-sm text-gray-600">
+                    💡 <strong>Now with Component Architecture:</strong> Each route is a separate, reusable component file 
+                    that can be easily maintained and tested independently!
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

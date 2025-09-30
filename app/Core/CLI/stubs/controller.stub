@@ -1,0 +1,33 @@
+<?php
+
+namespace {{namespace}};
+
+use Hasphp\App\Core\View;
+
+/**
+ * {{ControllerName}} Controller
+ */
+class {{ControllerName}}
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index($request, $response)
+    {
+        // TODO: Implement index method
+        $response->json([
+            'message' => 'Hello from {{ControllerName}}!'
+        ]);
+    }
+
+    /**
+     * Show a specific resource.
+     */
+    public function show($request, $response, $id)
+    {
+        // TODO: Implement show method
+        $response->json([
+            'message' => "Showing resource {$id}"
+        ]);
+    }
+}

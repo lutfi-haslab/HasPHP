@@ -1,0 +1,150 @@
+<?php
+
+namespace {{namespace}};
+
+use Hasphp\App\Core\View;
+use Hasphp\App\Models\{{modelName}};
+
+/**
+ * {{ControllerName}} Resource Controller
+ */
+class {{ControllerName}}
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index($request, $response)
+    {
+        try {
+            ${{modelVariable}}s = {{modelName}}::all();
+            
+            $response->json([
+                'success' => true,
+                'data' => ${{modelVariable}}s
+            ]);
+        } catch (\Exception $e) {
+            $response->status(500)->json([
+                'success' => false,
+                'error' => 'Failed to fetch resources'
+            ]);
+        }
+    }
+
+    /**
+     * Store a newly created resource.
+     */
+    public function store($request, $response)
+    {
+        try {
+            $data = $request->json();
+            
+            // TODO: Add validation here
+            
+            ${{modelVariable}} = {{modelName}}::create($data);
+            
+            $response->status(201)->json([
+                'success' => true,
+                'data' => ${{modelVariable}},
+                'message' => '{{modelName}} created successfully'
+            ]);
+        } catch (\Exception $e) {
+            $response->status(500)->json([
+                'success' => false,
+                'error' => 'Failed to create {{modelVariable}}'
+            ]);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show($request, $response, $id)
+    {
+        try {
+            ${{modelVariable}} = {{modelName}}::find($id);
+            
+            if (!${{modelVariable}}) {
+                $response->status(404)->json([
+                    'success' => false,
+                    'error' => '{{modelName}} not found'
+                ]);
+                return;
+            }
+            
+            $response->json([
+                'success' => true,
+                'data' => ${{modelVariable}}
+            ]);
+        } catch (\Exception $e) {
+            $response->status(500)->json([
+                'success' => false,
+                'error' => 'Failed to fetch {{modelVariable}}'
+            ]);
+        }
+    }
+
+    /**
+     * Update the specified resource.
+     */
+    public function update($request, $response, $id)
+    {
+        try {
+            ${{modelVariable}} = {{modelName}}::find($id);
+            
+            if (!${{modelVariable}}) {
+                $response->status(404)->json([
+                    'success' => false,
+                    'error' => '{{modelName}} not found'
+                ]);
+                return;
+            }
+            
+            $data = $request->json();
+            
+            // TODO: Add validation here
+            
+            ${{modelVariable}}->update($data);
+            
+            $response->json([
+                'success' => true,
+                'data' => ${{modelVariable}},
+                'message' => '{{modelName}} updated successfully'
+            ]);
+        } catch (\Exception $e) {
+            $response->status(500)->json([
+                'success' => false,
+                'error' => 'Failed to update {{modelVariable}}'
+            ]);
+        }
+    }
+
+    /**
+     * Remove the specified resource.
+     */
+    public function destroy($request, $response, $id)
+    {
+        try {
+            ${{modelVariable}} = {{modelName}}::find($id);
+            
+            if (!${{modelVariable}}) {
+                $response->status(404)->json([
+                    'success' => false,
+                    'error' => '{{modelName}} not found'
+                ]);
+                return;
+            }
+            
+            ${{modelVariable}}->delete();
+            
+            $response->json([
+                'success' => true,
+                'message' => '{{modelName}} deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            $response->status(500)->json([
+                'success' => false,
+                'error' => 'Failed to delete {{modelVariable}}'
+            ]);
+        }
+    }
+}

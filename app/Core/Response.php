@@ -5,31 +5,32 @@ use OpenSwoole\Http\Response as SwooleResponse;
 use JsonException;
 
 class Response {
-    private SwooleResponse $res;
+    private SwooleResponse $swooleResponse;
 
     public function __construct(SwooleResponse $res) {
-        $this->res = $res;
+        $this->swooleResponse = $res;
     }
 
     /**
      * Send JSON response
      * @param array $data Data to encode
      * @param int $status HTTP status code
-     * @return void
+     * @return self
      */
-    public function json(array $data, int $status = 200): void {
-        $this->res->status($status);
-        $this->res->header("Content-Type", "application/json");
+    public function json(array $data, int $status = 200): self {
+        $this->swooleResponse->status($status);
+        $this->swooleResponse->header("Content-Type", "application/json");
         try {
-            $json = json_encode($data, JSON_THROW_ON_ERROR);
-            $this->res->end($json);
+            $json = json_encode($data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            $this->swooleResponse->end($json);
         } catch (JsonException $e) {
-            $this->res->status(500);
-            $this->res->end(json_encode([
+            $this->swooleResponse->status(500);
+            $this->swooleResponse->end(json_encode([
                 'error' => 'JSON encoding failed',
                 'message' => $e->getMessage()
             ]));
         }
+        return $this;
     }
 
     /**
@@ -38,10 +39,11 @@ class Response {
      * @param int $status HTTP status code
      * @return void
      */
-    public function text(string $message, int $status = 200): void {
-        $this->res->status($status);
-        $this->res->header("Content-Type", "text/plain");
-        $this->res->end($message);
+    public function text(string $message, int $status = 200): self {
+        $this->swooleResponse->status($status);
+        $this->swooleResponse->header("Content-Type", "text/plain");
+        $this->swooleResponse->end($message);
+        return $this;
     }
 
     /**
@@ -50,10 +52,11 @@ class Response {
      * @param int $status HTTP status code
      * @return void
      */
-    public function html(string $html, int $status = 200): void {
-        $this->res->status($status);
-        $this->res->header("Content-Type", "text/html");
-        $this->res->end($html);
+    public function html(string $html, int $status = 200): self {
+        $this->swooleResponse->status($status);
+        $this->swooleResponse->header("Content-Type", "text/html");
+        $this->swooleResponse->end($html);
+        return $this;
     }
 
     /**
@@ -62,10 +65,11 @@ class Response {
      * @param int $status HTTP status code (301, 302, etc)
      * @return void
      */
-    public function redirect(string $url, int $status = 302): void {
-        $this->res->status($status);
-        $this->res->header("Location", $url);
-        $this->res->end();
+    public function redirect(string $url, int $status = 302): self {
+        $this->swooleResponse->status($status);
+        $this->swooleResponse->header("Location", $url);
+        $this->swooleResponse->end();
+        return $this;
     }
 
     /**
@@ -74,17 +78,18 @@ class Response {
      * @param string $contentType MIME type
      * @return void
      */
-    public function file(string $path, string $contentType = 'application/octet-stream'): void {
+    public function file(string $path, string $contentType = 'application/octet-stream'): self {
         if (!file_exists($path)) {
-            $this->res->status(404);
-            $this->res->end('File not found');
-            return;
+            $this->swooleResponse->status(404);
+            $this->swooleResponse->end('File not found');
+            return $this;
         }
 
-        $this->res->status(200);
-        $this->res->header("Content-Type", $contentType);
-        $this->res->header("Content-Length", (string)filesize($path));
-        $this->res->sendfile($path);
+        $this->swooleResponse->status(200);
+        $this->swooleResponse->header("Content-Type", $contentType);
+        $this->swooleResponse->header("Content-Length", (string)filesize($path));
+        $this->swooleResponse->sendfile($path);
+        return $this;
     }
 
     /**
@@ -93,8 +98,9 @@ class Response {
      * @param string $value Header value
      * @return void
      */
-    public function header(string $key, string $value): void {
-        $this->res->header($key, $value);
+    public function header(string $key, string $value): self {
+        $this->swooleResponse->header($key, $value);
+        return $this;
     }
 
     /**
@@ -102,8 +108,9 @@ class Response {
      * @param int $status HTTP status code
      * @return void
      */
-    public function status(int $status): void {
-        $this->res->status($status);
+    public function status(int $status): self {
+        $this->swooleResponse->status($status);
+        return $this;
     }
 
     /**
@@ -111,10 +118,11 @@ class Response {
      * @param string|null $content Optional content to send
      * @return void
      */
-    public function end(?string $content = null): void {
+    public function end(?string $content = null): self {
         if ($content !== null) {
-            $this->res->write($content);
+            $this->swooleResponse->write($content);
         }
-        $this->res->end();
+        $this->swooleResponse->end();
+        return $this;
     }
 }

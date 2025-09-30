@@ -1,0 +1,38 @@
+<?php
+
+use Hasphp\App\Core\DB\DatabaseManager;
+
+/**
+ * {{ClassName}} Migration
+ */
+class {{ClassName}}
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        $app = require __DIR__ . '/../../bootstrap/app.php';
+        $db = $app->resolve('db');
+        
+        // TODO: Add your table modifications here
+        // Example: Add column
+        // $db->query("ALTER TABLE {{tableName}} ADD COLUMN new_column VARCHAR(255)");
+        
+        // Example: Modify column (SQLite doesn't support ALTER COLUMN directly)
+        // You may need to create a new table, copy data, and rename
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        $app = require __DIR__ . '/../../bootstrap/app.php';
+        $db = $app->resolve('db');
+        
+        // TODO: Add rollback logic here
+        // Example: Drop column
+        // $db->query("ALTER TABLE {{tableName}} DROP COLUMN new_column");
+    }
+}

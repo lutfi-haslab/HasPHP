@@ -1,0 +1,22 @@
+<div x-show="currentRoute === 'users' && !loading" x-cloak>
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">👥 Users</h2>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4" x-show="users.length > 0">
+            <template x-for="user in users" :key="user.id">
+                <div class="border border-gray-200 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span class="text-white text-xl font-bold" x-text="user.name.charAt(0)"></span>
+                    </div>
+                    <h3 class="font-semibold text-gray-800" x-text="user.name"></h3>
+                    <p class="text-gray-600 text-sm" x-text="user.email"></p>
+                    <p class="text-gray-500 text-xs mt-2">Member since <span x-text="user.created_at"></span></p>
+                </div>
+            </template>
+        </div>
+        
+        <div x-show="users.length === 0" class="text-center py-8 text-gray-500">
+            No users available
+        </div>
+    </div>
+</div>

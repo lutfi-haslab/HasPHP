@@ -1,0 +1,177 @@
+{% extends "layouts/app.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div x-data="spaApp()" x-init="init()" class="min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-xl font-bold text-gray-800">HasPHP Component SPA</h1>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="flex space-x-1">
+                    <button @click="navigateTo('home')" 
+                            :class="currentRoute === 'home' ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-100'"
+                            class="px-4 py-2 rounded-md transition-colors">🏠 Home</button>
+                    <button @click="navigateTo('posts')" 
+                            :class="currentRoute === 'posts' ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-100'"
+                            class="px-4 py-2 rounded-md transition-colors">📝 Posts</button>
+                    <button @click="navigateTo('users')" 
+                            :class="currentRoute === 'users' ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-100'"
+                            class="px-4 py-2 rounded-md transition-colors">👥 Users</button>
+                    <button @click="navigateTo('about')" 
+                            :class="currentRoute === 'about' ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-100'"
+                            class="px-4 py-2 rounded-md transition-colors">ℹ️ About</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Loading State -->
+        <div x-show="loading" x-cloak class="flex justify-center items-center py-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+            <span class="ml-3 text-gray-600">Loading...</span>
+        </div>
+
+        <!-- Component Includes -->
+        {% include "components/home.twig" %}
+        {% include "components/posts.twig" %}
+        {% include "components/users.twig" %}
+        {% include "components/about.twig" %}
+
+        <!-- Error State -->
+        <div x-show="error && !loading" x-cloak class="bg-red-50 border border-red-200 rounded-lg p-6">
+            <h3 class="text-red-800 font-semibold mb-2">Error Loading Content</h3>
+            <p class="text-red-600" x-text="error"></p>
+            <button @click="loadCurrentRoute()" 
+                    class="mt-3 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors">
+                Try Again
+            </button>
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Simplified Alpine.js component with HasJS integration
+    function spaApp() {
+        return {
+            // Reactive state
+            currentRoute: 'home',
+            loading: false,
+            error: null,
+            posts: [],
+            users: [],
+            
+            // Initialize
+            init() {
+                this.initializeRouting();
+                console.log('🎯 Component-based SPA initialized!');
+            },
+            
+            // Setup routing
+            initializeRouting() {
+                // Use HasJS if available
+                if (typeof HasJS !== 'undefined' && HasJS.ready) {
+                    HasJS.ready((hasjs) => {
+                        hasjs.api.setBaseURL('{{ api_base_url }}');
+                        hasjs.router.setBasePath('/spa');
+                        
+                        hasjs.router.afterEach((path) => {
+                            const route = path === '/' ? 'home' : path.slice(1);
+                            this.currentRoute = route;
+                            this.loadRouteData(route);
+                        });
+                    });
+                }
+                
+                // Handle browser navigation
+                window.addEventListener('popstate', (e) => {
+                    const path = window.location.pathname.replace('/spa', '') || '/';
+                    const route = path === '/' ? 'home' : path.slice(1);
+                    this.currentRoute = route;
+                    this.loadRouteData(route);
+                });
+                
+                // Load initial route
+                const initialPath = window.location.pathname.replace('/spa', '') || '/';
+                const initialRoute = initialPath === '/' ? 'home' : initialPath.slice(1);
+                this.currentRoute = initialRoute;
+                this.loadRouteData(initialRoute);
+            },
+            
+            // Navigation
+            navigateTo(route) {
+                const path = route === 'home' ? '/spa' : `/spa/${route}`;
+                
+                if (typeof HasJS !== 'undefined' && HasJS.safeRouter) {
+                    HasJS.safeRouter.push(path);
+                } else {
+                    this.currentRoute = route;
+                    this.loadRouteData(route);
+                    if (window.history) {
+                        window.history.pushState({route: route}, '', path);
+                    }
+                }
+            },
+            
+            // Load route data
+            async loadRouteData(route) {
+                this.loading = true;
+                this.error = null;
+                
+                try {
+                    await new Promise(resolve => setTimeout(resolve, 200));
+                    
+                    switch(route) {
+                        case 'posts':
+                            if (this.posts.length === 0) await this.loadPosts();
+                            break;
+                        case 'users':
+                            if (this.users.length === 0) await this.loadUsers();
+                            break;
+                    }
+                } catch (error) {
+                    this.error = error.message;
+                } finally {
+                    this.loading = false;
+                }
+            },
+            
+            // API calls
+            async loadPosts() {
+                if (typeof HasJS !== 'undefined' && HasJS.safeApi) {
+                    const data = await HasJS.safeApi.get('{{ api_base_url }}/api/posts');
+                    this.posts = data.success ? data.data : [];
+                } else {
+                    const response = await fetch('{{ api_base_url }}/api/posts');
+                    const data = await response.json();
+                    this.posts = data.success ? data.data : [];
+                }
+            },
+            
+            async loadUsers() {
+                if (typeof HasJS !== 'undefined' && HasJS.safeApi) {
+                    const data = await HasJS.safeApi.get('{{ api_base_url }}/api/users');
+                    this.users = data.success ? data.data : [];
+                } else {
+                    const response = await fetch('{{ api_base_url }}/api/users');
+                    const data = await response.json();
+                    this.users = data.success ? data.data : [];
+                }
+            },
+            
+            loadCurrentRoute() {
+                this.loadRouteData(this.currentRoute);
+            }
+        };
+    }
+</script>
+{% endblock %}

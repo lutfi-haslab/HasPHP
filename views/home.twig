@@ -3,10 +3,50 @@
 
 <head>
     <title>{{ title }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .demo-links { margin-top: 30px; }
+        .demo-links a { 
+            display: inline-block; 
+            margin-right: 20px; 
+            padding: 10px 20px; 
+            background: #007bff; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+        }
+        .demo-links a:hover { background: #0056b3; }
+    </style>
 </head>
 
 <body>
     <h1>{{ title }}</h1>
+    <p>Welcome to HasPHP Framework! Explore our demos:</p>
+    
+    <div class="demo-links">
+        <a href="/demo">🧪 API Demo</a>
+        <a href="/spa">⚡ Component SPA</a>
+        <a href="/api/docs">📚 API Docs</a>
+    </div>
+    
+    <p style="margin-top: 20px; color: #666; font-size: 14px;">
+        ⚡ <strong>High Performance:</strong> HasPHP supports OpenSwoole for blazing-fast async/coroutine server with 10x better performance!<br>
+        ✨ Explore: <a href="/spa/posts" style="color: #007bff;">Posts</a> | 
+        <a href="/spa/users" style="color: #007bff;">Users</a> | 
+        <a href="/docs" style="color: #007bff;">API Docs</a> | 
+        <a href="/demo" style="color: #007bff;">Live Testing</a>
+    </p>
+    
+    <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-size: 13px;">
+        <strong>🔧 CLI Commands:</strong><br>
+        <code>php artisan serve</code> (Start Server) | 
+        <code>php artisan make:controller UserController</code> (Generate) | 
+        <code>php artisan migrate</code> (Database)
+    </div>
+    
+    <div style="margin-top: 10px; padding: 10px; background: #e7f3ff; border-radius: 5px; font-size: 13px;">
+        <strong>⚡ New CLI Features:</strong> Code generation, database migrations, and server management all in one tool!
+    </div>
 </body>
 
 </html>

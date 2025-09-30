@@ -1,0 +1,77 @@
+<?php
+
+namespace {{namespace}};
+
+/**
+ * {{ControllerName}} API Controller
+ */
+class {{ControllerName}}
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index($request, $response)
+    {
+        // TODO: Fetch and return data
+        $response->json([
+            'success' => true,
+            'data' => [],
+            'message' => 'Resources retrieved successfully'
+        ]);
+    }
+
+    /**
+     * Store a newly created resource.
+     */
+    public function store($request, $response)
+    {
+        // TODO: Validate and store data
+        $data = $request->json();
+        
+        $response->json([
+            'success' => true,
+            'data' => $data,
+            'message' => 'Resource created successfully'
+        ], 201);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show($request, $response, $id)
+    {
+        // TODO: Fetch specific resource
+        $response->json([
+            'success' => true,
+            'data' => ['id' => $id],
+            'message' => 'Resource retrieved successfully'
+        ]);
+    }
+
+    /**
+     * Update the specified resource.
+     */
+    public function update($request, $response, $id)
+    {
+        // TODO: Validate and update data
+        $data = $request->json();
+        
+        $response->json([
+            'success' => true,
+            'data' => array_merge($data, ['id' => $id]),
+            'message' => 'Resource updated successfully'
+        ]);
+    }
+
+    /**
+     * Remove the specified resource.
+     */
+    public function destroy($request, $response, $id)
+    {
+        // TODO: Delete resource
+        $response->json([
+            'success' => true,
+            'message' => 'Resource deleted successfully'
+        ]);
+    }
+}
